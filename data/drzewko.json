@@ -1,0 +1,28 @@
+{
+  "nodes": [
+    {
+      "id": 0,
+      "name": "Zadanie główne",
+      "status": 0,
+      "children": [1, 2]
+    },
+    {
+      "id": 1,
+      "name": "Podzadanie 1",
+      "status": 2,
+      "children": []
+    },
+    {
+      "id": 2,
+      "name": "Podzadanie 2",
+      "status": 0,
+      "children": [3]
+    },
+    {
+      "id": 3,
+      "name": "Podzadanie 2a",
+      "status": 1,
+      "children": []
+    }
+  ]
+}
