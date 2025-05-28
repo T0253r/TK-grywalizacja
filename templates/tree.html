@@ -1,16 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Drzewko Zadań{% endblock %}
+
+{% block content %}
+  <div class="main">
+    <div class="content">
+      <div id="cy"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="{{ url_for('static', filename='js/tree.js') }}"></script>
+{% endblock %}
+
+
+<!--
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
+  <meta charset="UTF-8">
   <title>Drzewko Zadań</title>
   <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-  <style>#cy { width: 100%; height: 600px; }</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 80px;
+      background: #888;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      margin: 10px;
+      writing-mode: vertical-rl;
+      text-align: center;
+    }
+
+        .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .nav-buttons button {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-buttons button:hover {
+      background: #666;
+    }
+
+
+    .content {
+      flex: 1;
+      position: relative;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cy {
+      width: 100%;
+      height: 100%;
+    }
+
+    .account-box {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #888;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      z-index: 10;
+    }
+
+    footer {
+      background: #888;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Twoje drzewko zadań</h2>
-  <div id="cy"></div>
+  <div class="container">
+    <div class="account-box">Placeholder</div>
 
-    <script src="{{ url_for('static', filename='js/tree.js') }}"></script> <!-- uruchamia skrypt z static/js/tree.js -->
-    <!-- swoją drogą to jest nagorszy sposób robienia komentarzy jaki widziałam -->
+    <div class="main">
+      <div class="sidebar">
+        <div class="nav-buttons">
+          <button onclick="location.href='/'" title="Strona główna">🏠</button>
+          <button onclick="location.href='/tree'" title="Drzewko zadań">🌳</button>
+      </div>
+    </div>
+      <div class="content">
+        <div id="cy"></div>
+      </div>
+    </div>
 
+    <footer>
+      Footer (najlepiej widoczny tylko na dole, żeby nie zasłaniał drzewka)
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/tree.js') }}"></script>
 </body>
 </html>
+-->

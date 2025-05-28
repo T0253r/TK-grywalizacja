@@ -20,7 +20,8 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
         'text-halign': 'center',
         'text-outline-color': '#222',
         'text-outline-width': 2,
-        'font-size': 12
+        'font-size': 12,
+        'grabbable' : false
       }
     },
     {

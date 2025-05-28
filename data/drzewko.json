@@ -4,25 +4,121 @@
       "id": 0,
       "name": "Zadanie główne",
       "status": 0,
-      "children": [1, 2]
+      "children": [1]
     },
     {
       "id": 1,
-      "name": "Podzadanie 1",
+      "name": "Etap 1",
+      "status": 1,
+      "children": [2]
+    },
+    {
+      "id": 2,
+      "name": "Etap 2",
+      "status": 2,
+      "children": [3, 10, 13]
+    },
+    {
+      "id": 3,
+      "name": "Etap 3",
+      "status": 0,
+      "children": [4]
+    },
+    {
+      "id": 4,
+      "name": "Etap 4",
+      "status": 1,
+      "children": [5, 6]
+    },
+    {
+      "id": 5,
+      "name": "Etap 5",
+      "status": 2,
+      "children": [7]
+    },
+    {
+      "id": 6,
+      "name": "Offshoot A",
+      "status": 0,
+      "children": [8]
+    },
+    {
+      "id": 7,
+      "name": "Etap 6",
+      "status": 0,
+      "children": [9, 12]
+    },
+    {
+      "id": 8,
+      "name": "Offshoot A1",
+      "status": 1,
+      "children": [12]
+    },
+    {
+      "id": 9,
+      "name": "Etap 7",
+      "status": 1,
+      "children": [14]
+    },
+    {
+      "id": 10,
+      "name": "Offshoot B",
+      "status": 0,
+      "children": [11]
+    },
+    {
+      "id": 11,
+      "name": "Offshoot B1",
+      "status": 2,
+      "children": [7]
+    },
+    {
+      "id": 12,
+      "name": "Merge Node 1",
+      "status": 2,
+      "children": [15]
+    },
+    {
+      "id": 13,
+      "name": "Offshoot C",
+      "status": 0,
+      "children": []
+    },
+    {
+      "id": 14,
+      "name": "Merge Node 2",
+      "status": 1,
+      "children": [15]
+    },
+    {
+      "id": 15,
+      "name": "Etap 8",
+      "status": 0,
+      "children": [16, 17]
+    },
+    {
+      "id": 16,
+      "name": "Etap 9",
+      "status": 1,
+      "children": [18]
+    },
+    {
+      "id": 17,
+      "name": "Offshoot D",
+      "status": 0,
+      "children": [19]
+    },
+    {
+      "id": 18,
+      "name": "Etap 10",
       "status": 2,
       "children": []
     },
     {
-      "id": 2,
-      "name": "Podzadanie 2",
-      "status": 0,
-      "children": [3]
-    },
-    {
-      "id": 3,
-      "name": "Podzadanie 2a",
+      "id": 19,
+      "name": "Offshoot D1",
       "status": 1,
-      "children": []
+      "children": [16]
     }
   ]
 }
