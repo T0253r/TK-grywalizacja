@@ -84,6 +84,20 @@ body, html {
   z-index: 10;
 }
 
+.popper-div {
+  border: 1px solid #888;
+  background: #fff;
+  z-index: 9999;
+  padding: 0.5em;
+  pointer-events: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px #0002;
+  min-width: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 footer {
   margin-top: auto;
   background: #888;

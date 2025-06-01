@@ -12,8 +12,6 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
           'label': 'data(label)',
           'text-wrap': 'wrap',
           'text-max-width': 100,
-          'width': 'label',
-          'height': 'auto',
           'padding': '10px',
           'color': '#fff',
           'text-valign': 'center',
@@ -63,6 +61,7 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
   });
 
   cy.ready(() => {
+    //ustawienie odpowiedniego poczatkowego zoom i pan
     const firstNode = cy.nodes()[0]; // zaklada ze pierwszy node bedzie pierwszy na liscie
 
     if (firstNode) {
@@ -76,6 +75,30 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
       const offset = pxFromTop + firstNodeHeight - firstNodePos.y;
 
       cy.panBy({x: 0, y: offset})
+    }
+  });
+
+  function makeDiv(text) {
+    var div = document.createElement('div');
+    div.classList.add('popper-div');
+    div.innerHTML = text;
+    document.body.appendChild(div);
+    return div;
+  }
+
+  cy.on('tap', 'node', function(evt) {
+    document.querySelectorAll('.popper-div').forEach(e => e.remove());
+    var node = evt.target;
+    node.popper({
+      content: function(){
+        return makeDiv(node.data('description') || 'Brak opisu');
+      }
+    });
+  });
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) {
+      document.querySelectorAll('.popper-div').forEach(e => e.remove());
     }
   });
 });

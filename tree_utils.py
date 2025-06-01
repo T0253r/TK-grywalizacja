@@ -17,7 +17,8 @@ def to_cytoscape_format(tree_data):
             "data": {
                 "id": node["id"],
                 "label": node["name"],
-                "status": node["status"]
+                "status": node["status"],
+                "description": node.get("description", "")
             }
         }
         for node in tree_data["nodes"]
