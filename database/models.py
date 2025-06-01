@@ -11,6 +11,18 @@ class User(db.Model):
     points = db.Column(db.Integer, default=0)
     is_admin = db.Column(db.Boolean, default=False)
 
+    def make_admin(self):
+        self.is_admin = True
+        db.session.commit()
+    
+    def revoke_admin(self):
+        self.is_admin = False
+        db.session.commit()
+    
+    def change_name(self, new_name):
+        self.name = new_name
+        db.session.commit()
+
 class Tree(db.Model):
     __tablename__ = 'trees'
 
@@ -19,6 +31,19 @@ class Tree(db.Model):
     json_structure = db.Column(db.JSON, nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     is_public = db.Column(db.Boolean, default=False)
+
+    def make_public(self):
+        self.is_public = True
+        db.session.commit()
+    
+    def change_name(self, new_name):
+        self.name = new_name
+        db.session.commit()
+    
+    def update_json_structure(self, json_file):
+        self.json_structure = json_file
+        # updating all the tasks
+        db.session.commit()
 
 class Task(db.Model):
     __tablename__ = 'tasks'
