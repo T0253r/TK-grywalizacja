@@ -37,10 +37,10 @@ from database.queries.users import *
 
 @app.route('/users')
 def users():
-    #return prettify_users(get_users())
-    #return prettify_users([get_user_by_id(2)])
+    #return get_all_users()
+    #return get_user_by_id(1)
     #add_user('some@email.meow', 'nepeta')
-    return prettify_users(users_ranking())
+    return users_ranking()
 
 @app.route('/ranking')
 def ranking():
