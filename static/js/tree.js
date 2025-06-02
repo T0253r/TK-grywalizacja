@@ -57,8 +57,44 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
       padding: 10
     },
 
-    autoungrabify: true,
+    autoungrabify: true, //zeby uzytkownik nie mogl ruszac nodami
   });
+
+  cy.userZoomingEnabled(false);
+  cy.userPanningEnabled(false);
+  cy.boxSelectionEnabled(false);
+
+  const cyContainer = cy.container();
+
+  //funkcja pan z ograniczeniem zeby nie wyjechac poza graf
+  function clampPan(pan, bbox, container) {
+    const containerHeight = container.clientHeight;
+    const graphHeight = bbox.h;
+    let minY, maxY;
+    let margin = 16;
+    if (graphHeight < containerHeight) {
+      minY = maxY = (containerHeight - graphHeight) / 2 - bbox.y1; //jesli graf jest mniejszy od widoku jest wysrodkowany
+    } else {
+      minY = containerHeight - bbox.y2 - margin;
+      maxY = -bbox.y1 + margin;
+    }
+    const clampedY = Math.max(minY, Math.min(maxY, pan.y));
+    return { x: pan.x, y: clampedY };
+  }
+
+  //ustawianie scrollowania w myszce
+  cyContainer.addEventListener('wheel', function(e) {
+    if (e.deltaY !== 0) {
+      e.preventDefault();
+      document.querySelectorAll('.popper-div').forEach(e => e.remove()); //usuwa opisy, bo na razie nie ruszaja sie po pojawieniu
+      const pan = cy.pan();
+      const bbox = cy.elements().boundingBox();
+      const container = cy.container();
+      let newPan = { x: pan.x, y: pan.y - e.deltaY };
+      newPan = clampPan(newPan, bbox, container);
+      cy.pan(newPan);
+    }
+  }, { passive: false });
 
   cy.ready(() => {
     //ustawienie odpowiedniego poczatkowego zoom i pan
@@ -71,8 +107,8 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
 
       const firstNodePos = firstNode.renderedPosition();
       const firstNodeHeight = firstNode.renderedHeight();
-      const pxFromTop = 0; // poczatkowo mialo byc okreslona ilosc px z gory, teraz robione wzgledem wysokosci noda
-      const offset = pxFromTop + firstNodeHeight - firstNodePos.y;
+      const pxFromTop = 16;
+      const offset = pxFromTop + firstNodeHeight/2 - firstNodePos.y;
 
       cy.panBy({x: 0, y: offset})
     }
@@ -88,7 +124,7 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
 
   cy.on('tap', 'node', function(evt) {
     document.querySelectorAll('.popper-div').forEach(e => e.remove());
-    var node = evt.target;
+    let node = evt.target;
     node.popper({
       content: function(){
         return makeDiv(node.data('description') || 'Brak opisu');
