@@ -28,11 +28,11 @@ def get_public_trees():
     trees = Tree.query.filter_by(is_public=True).all()
     return _prettify_trees(trees)
 
-def get_trees_by_author(author_id):
+def get_trees_by_author(admin_id):
     ''''
-    Gets all public trees made by the author.
+    Gets all public trees made by the admin.
     '''
-    trees = Tree.query.filter_by(created_by=author_id, is_public=True).all()
+    trees = Tree.query.filter_by(created_by=admin_id, is_public=True).all()
     return _prettify_trees(trees)
 
 def get_unpublished_trees(author_id):
@@ -42,7 +42,7 @@ def get_unpublished_trees(author_id):
     trees = Tree.query.filter_by(created_by=author_id, is_public=False).all()
     return _prettify_trees(trees)
 
-def get_tree_by_id(id):
+def get_tree(id):
     '''
     Gets tree by id.
     '''
@@ -54,7 +54,7 @@ def add_tree(name, json_structure, created_by):
     Adds a tree to database.
     '''
     tree = Tree(name=name, json_structure=json_structure, created_by=created_by)
-    # adding all the tasks
+    # add all tasks
     db.session.add(tree)
     db.session.commit()
 
@@ -62,6 +62,6 @@ def delete_tree(id):
     '''
     Deletes a tree from database.
     '''
-    tree = get_tree_by_id(id)
+    tree = get_tree(id)
     db.session.delete(tree)
     db.session.commit()
