@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template
+from tree_utils import get_tree
 
 from database.models import db
 
@@ -23,16 +24,14 @@ db.init_app(app) # inicjalizuje aplikację dla bazy danych
 def index():
     return render_template('index.html')
 
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @app.route('/tree')
 def tree():
-    return render_template('tree_user.html')
+    return render_template('tree.html')
 
+# uruchamia się przez tree.js
+@app.route("/tree/cytoscape")
+def get_cytoscape_tree():
+    return get_tree('data/drzewko.json')
 # zapytania dla użytkowników
 from database.queries.users import *
 
