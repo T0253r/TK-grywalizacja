@@ -50,15 +50,35 @@ class Task(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tree_id = db.Column(db.Integer, db.ForeignKey('trees.id'))
+    task_number = db.Column(db.Integer)
     name = db.Column(db.String(127))
     description = db.Column(db.String(511))
     points = db.Column(db.Integer)
 
+    def change_name(self, new_name):
+        self.name = new_name
+        db.session.commit()
+    
+    def change_description(self, new_description):
+        self.description = new_description
+        db.session.commit()
+    
+    def change_points(self, new_points):
+        self.points = new_points
+        db.session.commit()
+
 class User_Task(db.Model):
     __tablename__ = 'user_tasks'
 
-    id = db.Column(db.Integer, primary_key=True)
-    task_id =  db.Column(db.Integer, db.ForeignKey('tasks.id'))
-    user_id =  db.Column(db.Integer, db.ForeignKey('users.id'))
-    status = db.Column(db.String)
+    task_id =  db.Column(db.Integer, db.ForeignKey('tasks.id'), primary_key=True)
+    user_id =  db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    status = db.Column(db.Integer, default=0) # 0 - not done, 1 - pending, 2 - accepted
     is_visible = db.Column(db.Boolean, default=False)
+
+    def change_status(self, new_status):
+        self.status = new_status
+        db.session.commit()
+
+    def change_visibility(self, visibility):
+        self.is_visible = visibility
+        db.session.commit()
