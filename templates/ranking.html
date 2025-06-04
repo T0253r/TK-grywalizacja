@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Ranking{% endblock %}
+
+{% block content %}
+    <div class="hdr"> Ranking użytkowników</div>
+    <div id="ranking"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/ranking.js') }}"></script>
+{% endblock %}

@@ -1,4 +1,22 @@
-<div class="sidebar">
-  <button onclick="location.href='/'" title="Strona główna">HOME</button>
-  <button onclick="location.href='/tree'" title="Drzewko zadań">TREE</button>
+<div class="sidebar flex-col left-[20px]">
+    <button class="button" id="home" onclick="location.href='/'" title="Strona główna">
+        <img class="hover:invert" src="../static/images/home.png" alt="HOME"/>
+    </button>
+
+    <button class="button" id="tree" onclick="location.href='/tree'" title="Drzewko zadań">
+        <img class="hover:invert" src="../static/images/tree.png" alt="TREE"/>
+    </button>
+
+    <button class="button" id="rank" onclick="location.href='/ranking'" title="Ranking użytkowników">
+        <img class="hover:invert" src="../static/images/ranking.png" alt="RANK"/>
+    </button>
 </div>
+
+<div class="sidebar items-center flex-row right-[20px]">
+    <p>użytkownik_2412</p>
+    <img src="../static/images/user_icon.png">
+</div>
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/button_behavior.js') }}"></script>
+{% endblock %}

@@ -42,6 +42,10 @@ def users():
     #add_user('some@email.meow', 'nepeta')
     return prettify_users(users_ranking())
 
+@app.route('/ranking')
+def ranking():
+    return render_template('ranking.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
