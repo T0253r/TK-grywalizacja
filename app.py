@@ -115,7 +115,7 @@ def dashboard():
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.clear()
     return redirect(url_for('index'))
 
 @app.route('/ranking')
