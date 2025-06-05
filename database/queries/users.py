@@ -9,6 +9,7 @@ def _prettify_user(user: User):
     '''
     return {
         'id': user.id,
+        'discord_id': user.discord_id,
         'name': user.name,
         'email': user.email,
         'points': user.points
@@ -58,30 +59,45 @@ def get_user_by_id(id):
     user = db.get_or_404(User, id)
     return _prettify_user(user)
 
-def _add_any_user(email, name, is_admin=False):
+def get_user_by_discord_id(discord_id):
+    '''
+    Gets a user by discord_id.
+    '''
+    user = User.query.filter_by(discord_id=discord_id).first_or_404()
+    return _prettify_user(user)
+
+def _add_any_user(discord_id, email, name, is_admin=False):
     '''
     Adds a user to database.
     '''
-    user = User(email=email, name=name, is_admin=is_admin)
+    user = User(discord_id=discord_id, email=email, name=name, is_admin=is_admin)
     db.session.add(user)
     db.session.commit()
 
-def add_non_admin_user(email, name):
+def add_non_admin_user(discord_id, email, name):
     '''
     Adds a non-admin user to database.
     '''
-    _add_any_user(email, name)
+    _add_any_user(discord_id, email, name)
 
-def add_admin(email, name):
+def add_admin(discord_id, email, name):
     '''
     Adds an admin user to database.
     '''
-    _add_any_user(email, name, True)
+    _add_any_user(discord_id, email, name, True)
 
 def delete_user(id):
     '''
     Deletes user by id.
     '''
     user = get_user_by_id(id)
+    db.session.delete(user)
+    db.session.commit()
+    
+def delete_user_by_discord_id(discord_id):
+    '''
+    Deletes user by discord_id.
+    '''
+    user = User.query.filter_by(discord_id=discord_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
