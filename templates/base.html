@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Grywalizacja{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head>
-<body>
+<body class="min-h-screen">
 
   {% include 'sidebar.html' %}
 
-  <div class="container">
+  <div class="flex flex-col h-screen bg-white">
     {% block content %}{% endblock %}
-    <footer>Placeholder footer</footer>
+    <footer class="mt-auto bg-gray-400 text-white text-center p-2.5 text-sm">Projekt grywalizacja 2025</footer>
   </div>
 
   {% block scripts %}{% endblock %}

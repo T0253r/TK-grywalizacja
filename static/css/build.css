@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@tailwind utilities;
+
+.sidebar {
+  @apply
+    flex
+    gap-2.5
+    fixed
+    top-5
+    bg-gray-400
+    text-white
+    p-2.5
+    rounded-[20px]
+    z-[1000];
+}
+
+.user-rank {
+  @apply
+    flex
+    justify-between
+    items-center
+  text-white
+    text-3xl
+    py-2.5
+    px-5
+    rounded-[20px]
+}
+
+.hdr {
+  @apply
+    text-center
+    font-semibold
+    text-5xl
+    mt-10
+}
+
+.button {
+  @apply
+  text-white
+    border-0
+    p-2.5
+    text-lg
+    rounded-xl
+    cursor-pointer
+    transition-colors
+    duration-200
+    ease-in-out;
+}
+
+#cy {
+  @apply w-full h-full;
+}
+
+#ranking {
+  @apply flex flex-col gap-2 items-center justify-center h-screen;
+}
+
+.popper-div {
+  border: 1px solid #888;
+  background: #fff;
+  z-index: 9999;
+  padding: 0.5em;
+  pointer-events: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px #0002;
+  min-width: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
