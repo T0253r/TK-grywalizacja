@@ -1,6 +1,7 @@
 import os
 
 import requests
+from werkzeug.exceptions import NotFound
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request, session
 
@@ -102,7 +103,14 @@ def callback():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html', user=session['user'], is_member=session['is_member'],
+    if 'user' not in session or 'id' not in session['user']:
+        return redirect('/login')
+    try:
+        user_data = get_user_by_discord_id(session['user']['id'])
+    except NotFound:
+        add_non_admin_user(session['user']['id'], session['user']['email'], session['user']['global_name'])
+    finally:
+        return render_template('dashboard.html', user=session['user'], is_member=session['is_member'],
                            guild=session['guild'])
 
 @app.route('/logout')

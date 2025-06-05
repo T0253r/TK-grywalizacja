@@ -6,6 +6,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
+    discord_id = db.Column(db.Integer, unique=True, nullable=False)
     email = db.Column(db.String(127), unique=True, nullable=False)
     name = db.Column(db.String(63), nullable=False)
     points = db.Column(db.Integer, default=0)
