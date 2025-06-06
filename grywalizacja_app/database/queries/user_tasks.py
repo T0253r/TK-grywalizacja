@@ -1,4 +1,4 @@
-from database.models import db, User_Task, Task, User
+from grywalizacja_app.database.models import db, User_Task, Task, User
 from typing import overload
 
 # tutaj są operacje SELECT, INSERT i DELETE

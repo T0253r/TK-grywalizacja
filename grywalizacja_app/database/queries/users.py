@@ -1,4 +1,5 @@
-from database.models import db, User
+from grywalizacja_app.database.models import db, User
+
 
 # tutaj są operacje SELECT, INSERT i DELETE
 # w models.py są metody do modyfikacji (UPDATE)

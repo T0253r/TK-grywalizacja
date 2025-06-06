@@ -1,4 +1,4 @@
-from database.queries.users import get_user_by_discord_id
+from grywalizacja_app.database.queries.users import get_user_by_discord_id
 
 
 def parse_scope(scope):

@@ -1,4 +1,4 @@
-from database.models import db, Tree
+from grywalizacja_app.database.models import db, Tree
 
 # tutaj są operacje SELECT, INSERT i DELETE
 # w models.py są metody do modyfikacji (UPDATE)
