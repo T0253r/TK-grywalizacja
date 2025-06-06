@@ -1,7 +1,6 @@
 from grywalizacja_app.database.models import db, Tree
+from grywalizacja_app.database.queries.tasks import add_all_tasks
 
-# tutaj są operacje SELECT, INSERT i DELETE
-# w models.py są metody do modyfikacji (UPDATE)
 
 def _prettify_tree(tree: Tree):
     '''
@@ -54,9 +53,9 @@ def add_tree(name, json_structure, created_by):
     Adds a tree to database.
     '''
     tree = Tree(name=name, json_structure=json_structure, created_by=created_by)
-    # add all tasks
     db.session.add(tree)
     db.session.commit()
+    add_all_tasks(tree_id=tree.id, json_structure=json_structure)
 
 def delete_tree(id):
     '''

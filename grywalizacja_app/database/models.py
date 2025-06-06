@@ -46,8 +46,8 @@ class Tree(db.Model):
         self.name = new_name
         db.session.commit()
     
-    def update_json_structure(self, json_file):
-        self.json_structure = json_file
+    def update_json_structure(self, json_structure):
+        self.json_structure = json_structure
         # updating all the tasks
         db.session.commit()
 
@@ -56,7 +56,7 @@ class Task(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tree_id = db.Column(db.Integer, db.ForeignKey('trees.id'))
-    task_number = db.Column(db.Integer)
+    node_id = db.Column(db.Integer)
     name = db.Column(db.String(127))
     description = db.Column(db.String(511))
     points = db.Column(db.Integer)

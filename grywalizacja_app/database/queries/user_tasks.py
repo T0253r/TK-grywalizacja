@@ -1,8 +1,6 @@
 from grywalizacja_app.database.models import db, User_Task, Task, User
 from typing import overload
 
-# tutaj są operacje SELECT, INSERT i DELETE
-# w models.py są metody do modyfikacji (UPDATE)
 
 def _prettify_user_task(user_task: User_Task):
     '''
