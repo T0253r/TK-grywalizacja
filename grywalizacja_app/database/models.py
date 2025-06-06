@@ -35,7 +35,7 @@ class Tree(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(127))
     json_structure = db.Column(db.JSON, nullable=False)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_by = db.Column(db.Integer, db.ForeignKey('users.discord_id'))
     is_public = db.Column(db.Boolean, default=False)
 
     def make_public(self):
@@ -77,7 +77,7 @@ class User_Task(db.Model):
     __tablename__ = 'user_tasks'
 
     task_id =  db.Column(db.Integer, db.ForeignKey('tasks.id'), primary_key=True)
-    user_id =  db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    user_id =  db.Column(db.Integer, db.ForeignKey('users.discord_id'), primary_key=True)
     status = db.Column(db.Integer, default=0) # 0 - not done, 1 - pending, 2 - accepted
     is_visible = db.Column(db.Boolean, default=False)
 

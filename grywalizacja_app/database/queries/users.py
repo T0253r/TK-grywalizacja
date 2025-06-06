@@ -9,7 +9,6 @@ def _prettify_user(user: User):
     Makes a user into a dictionary.
     '''
     return {
-        'id': user.id,
         'discord_id': user.discord_id,
         'name': user.name,
         'email': user.email,
@@ -53,13 +52,6 @@ def get_admins():
     admins = User.query.filter_by(is_admin=True).all()
     return _prettify_users(admins)
 
-def get_user_by_id(id):
-    '''
-    Gets a user by id.
-    '''
-    user = db.get_or_404(User, id)
-    return _prettify_user(user)
-
 def get_user_by_discord_id(discord_id):
     '''
     Gets a user by discord_id.
@@ -87,14 +79,6 @@ def add_admin(discord_id, email, name):
     '''
     _add_any_user(discord_id, email, name, True)
 
-def delete_user(id):
-    '''
-    Deletes user by id.
-    '''
-    user = get_user_by_id(id)
-    db.session.delete(user)
-    db.session.commit()
-    
 def delete_user_by_discord_id(discord_id):
     '''
     Deletes user by discord_id.
