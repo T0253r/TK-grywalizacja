@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -5,12 +6,16 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    discord_id = db.Column(db.Integer, unique=True, nullable=False)
+    discord_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(127), unique=True, nullable=False)
     name = db.Column(db.String(63), nullable=False)
     points = db.Column(db.Integer, default=0)
     is_admin = db.Column(db.Boolean, default=False)
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False
+    )
 
     def make_admin(self):
         self.is_admin = True
