@@ -3,11 +3,20 @@
 {% block title %}Drzewko Zadań{% endblock %}
 
 {% block content %}
-    <div class="hdr">Drzewko zadań</div>
-      <div id="cy"></div>
+  <form method="get" action="{{ url_for('tree') }}" class="flex justify-center mt-8">
+    <select name="tree_id" id="tree_id" onchange="this.form.submit()" class="text-lg p-2 rounded-xl">
+      {% for tree in trees %}
+        <option value="{{ tree.id }}" {% if tree.id == selected_tree_id %}selected{% endif %}>{{ tree.name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  <div id="cy"></div>
 {% endblock %}
 
 {% block scripts %}
+  <script>
+    window.SELECTED_TREE_ID = {{ selected_tree_id }};
+  </script>
   <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/cytoscape-popper@2.0.0/cytoscape-popper.min.js"></script>

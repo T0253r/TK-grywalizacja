@@ -1,5 +1,5 @@
-from database.models import db, Task
-from database.queries.user_tasks import add_user_tasks_by_task
+from grywalizacja_app.database.models import db, Task
+from grywalizacja_app.database.queries.user_tasks import add_user_tasks_by_task
 from typing import overload
 
 

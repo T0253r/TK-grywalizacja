@@ -1,4 +1,5 @@
-fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.py, zwraca załadowane dane z pliku json
+const treeId = window.SELECTED_TREE_ID;
+fetch(`/tree/cytoscape?tree_id=${treeId}`) // pobiera dane z /tree/cytoscape -> 23 linijka w app.py, zwraca załadowane dane z pliku json
   .then(res => res.json()) // odczytuje odpowiedź jako json (Response zwrócone z get_tree())
   .then(data => { // data to sparsowany obiekt js czyli nasze drzewko
     const cy = cytoscape({
@@ -114,11 +115,54 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
     }
   });
 
-  function makeDiv(text) {
-    var div = document.createElement('div');
+  function makeDiv(node) {
+    let div = document.createElement('div');
     div.classList.add('popper-div');
-    div.innerHTML = text;
+    let html = `<div style="margin-bottom:8px; text-align:center;">${node.data('description') || 'Brak opisu'}</div>`;
+    let buttonClass = '';
+    let buttonText = '';
+    let buttonHandler = null;
+    let isDisabled = false;
+
+    let baseClasses = "px-4 py-2 rounded-xl text-lg transition-colors duration-200";
+    let statusClasses = "";
+    let textColor = "text-black";
+
+    switch (node.data('status')) {
+        case 0:
+            buttonClass = 'button btn-incomplete';
+            buttonText = 'Oznacz jako wykonane';
+            textColor = "text-green"
+            buttonHandler = function() {
+              console.log('Zaznaczone: ', node.data('id')) //placeholder
+            };
+            break;
+        case 1:
+            buttonClass = 'button btn-complete';
+            buttonText = 'Wykonane';
+            statusClasses = "bg-green-600 hover:bg-green-700";
+            buttonHandler = function() {
+                console.log('Odznaczone: ', node.data('id')) //placeholder
+            };
+            break;
+        case 2:
+            buttonClass = 'button btn-accepted';
+            buttonText = 'Zatwierdzone';
+            statusClasses = "bg-blue-600 opacity-70 cursor-default";
+            isDisabled = true;
+            break;
+    }
+
+    let disabledAttr = isDisabled ? "disabled" : "";
+    html += `<button class="${baseClasses} ${statusClasses} ${textColor}" type="button" ${disabledAttr}>${buttonText}</button>`;
+
+    div.innerHTML = html;
     document.body.appendChild(div);
+
+    if (buttonHandler) {
+        div.querySelector('button').addEventListener('click', buttonHandler);
+    }
+
     return div;
   }
 
@@ -127,14 +171,14 @@ fetch('/tree/cytoscape') // pobiera dane z /tree/cytoscape -> 23 linijka w app.p
     let node = evt.target;
     node.popper({
       content: function(){
-        return makeDiv(node.data('description') || 'Brak opisu');
+        return makeDiv(node);
       }
     });
   });
 
-  cy.on('tap', function(evt) {
-    if (evt.target === cy) {
-      document.querySelectorAll('.popper-div').forEach(e => e.remove());
-    }
-  });
+  // cy.on('tap', function(evt) {
+  //   if (evt.target === cy) {
+  //     document.querySelectorAll('.popper-div').forEach(e => e.remove());
+  //   }
+  // });
 });
