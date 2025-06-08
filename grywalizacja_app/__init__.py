@@ -6,6 +6,7 @@ from flask import Flask, render_template, redirect, session, url_for
 from .auth import login_required
 from .tree_utils import get_tree
 from .database.queries.users import *
+from .database.queries.user_tasks import *
 from .database.models import db
 
 # w pliku .env należy wpisać:
@@ -45,6 +46,13 @@ def create_app(test_config=None):
 
     db.init_app(app) # inicjalizuje aplikację dla bazy danych
 
+    @app.context_processor
+    def inject_admin():
+        if 'user' not in session:
+            return {}
+        else:
+            return dict(is_admin=session['is_admin'])
+
     @app.route('/')
     def index():
         return render_template('index.html')
@@ -75,6 +83,9 @@ def create_app(test_config=None):
         except NotFound:
             add_non_admin_user(session['user']['id'], session['user']['email'], session['user']['global_name'])
         finally:
+            if session['is_admin'] is None:
+                ehhhhhhhhh(session['user']['id']).make_admin()
+                session['is_admin'] = get_admin_by_discord_id(session['user']['id']) is not None
             return render_template('dashboard.html', user=session['user'], is_member=session['is_member'],
                                    guild=session['guild'])
 
@@ -84,7 +95,14 @@ def create_app(test_config=None):
     def ranking():
         return render_template('ranking.html')
 
+    @app.route('/admin')
+    @login_required
+    def admin():
+        return render_template('admin.html')
+
     from . import auth
+    from . import admin_options
     app.register_blueprint(auth.bp)
+    app.register_blueprint(admin_options.admin)
 
     return app

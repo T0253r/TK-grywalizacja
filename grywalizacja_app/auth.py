@@ -72,6 +72,7 @@ def callback():
     ).json()
 
     session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
+    session['is_admin'] = None
     return redirect(url_for('dashboard'))
 
 

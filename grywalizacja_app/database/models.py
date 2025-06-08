@@ -15,6 +15,7 @@ class User(db.Model):
     discord_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(127), unique=True, nullable=False)
     name = db.Column(db.String(63), nullable=False)
+    points = db.Column(db.Integer, default=0)
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(
         db.DateTime(timezone=True),
@@ -29,7 +30,7 @@ class User(db.Model):
             for user_task in self.user_tasks
             if user_task.status ==2
         )
-    
+
     @points.expression
     def points(cls):
         return (
