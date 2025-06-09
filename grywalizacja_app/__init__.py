@@ -53,7 +53,6 @@ def create_app(test_config=None):
     @app.route('/tree')
     def tree():
         trees = get_public_trees()
-        print(trees)
         tree_id = request.args.get('tree_id', type=int)
         if not tree_id and trees:
             tree_id = trees[0]['id']  # domyslnie wczytuje sie pierwsze drzewko
@@ -96,5 +95,8 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import api
+    app.register_blueprint(api.api)
 
     return app

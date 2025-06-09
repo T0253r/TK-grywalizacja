@@ -115,6 +115,32 @@ fetch(`/tree/cytoscape?tree_id=${treeId}`) // pobiera dane z /tree/cytoscape -> 
     }
   });
 
+  function createPopper(node) {
+    document.querySelectorAll('.popper-div').forEach(e => e.remove());
+    node.popper({
+      content: function(){
+        return makeDiv(node);
+      }
+    });
+  }
+
+  function updateTaskStatus(apiUrl, node) {
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task_id: node.data('id') })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            node.data('status', data.new_status) // moze nie dzialac, nietestowane
+            createPopper(node)
+        } else {
+            alert('Błąd podczas aktualizacji zadania');
+        }
+    });
+}
+
   function makeDiv(node) {
     let div = document.createElement('div');
     div.classList.add('popper-div');
@@ -124,37 +150,37 @@ fetch(`/tree/cytoscape?tree_id=${treeId}`) // pobiera dane z /tree/cytoscape -> 
     let buttonHandler = null;
     let isDisabled = false;
 
-    let baseClasses = "px-4 py-2 rounded-xl text-lg transition-colors duration-200";
-    let statusClasses = "";
+    let baseClasses = "px-4 py-2 rounded-xl text-lg transition-colors duration-200 border border-blue-400";    let statusClasses = "";
     let textColor = "text-black";
 
-    switch (node.data('status')) {
+    if (window.IS_LOGGED_IN) {
+      switch (node.data('status')) {
         case 0:
-            buttonClass = 'button btn-incomplete';
-            buttonText = 'Oznacz jako wykonane';
-            textColor = "text-green"
-            buttonHandler = function() {
-              console.log('Zaznaczone: ', node.data('id')) //placeholder
-            };
-            break;
+          buttonClass = 'button btn-incomplete';
+          buttonText = 'Oznacz jako wykonane';
+          buttonHandler = function () {
+            updateTaskStatus('/api/user_mark', node);
+          };
+          break;
         case 1:
-            buttonClass = 'button btn-complete';
-            buttonText = 'Wykonane';
-            statusClasses = "bg-green-600 hover:bg-green-700";
-            buttonHandler = function() {
-                console.log('Odznaczone: ', node.data('id')) //placeholder
-            };
-            break;
+          buttonClass = 'button btn-complete';
+          buttonText = 'Wykonane';
+          statusClasses = "bg-green-600 hover:bg-green-700";
+          buttonHandler = function () {
+            updateTaskStatus('/api/user_unmark', node);
+          };
+          break;
         case 2:
-            buttonClass = 'button btn-accepted';
-            buttonText = 'Zatwierdzone';
-            statusClasses = "bg-blue-600 opacity-70 cursor-default";
-            isDisabled = true;
-            break;
-    }
+          buttonClass = 'button btn-accepted';
+          buttonText = 'Zatwierdzone';
+          statusClasses = "bg-blue-600 opacity-70 cursor-default";
+          isDisabled = true;
+          break;
+      }
 
-    let disabledAttr = isDisabled ? "disabled" : "";
-    html += `<button class="${baseClasses} ${statusClasses} ${textColor}" type="button" ${disabledAttr}>${buttonText}</button>`;
+      let disabledAttr = isDisabled ? "disabled" : "";
+      html += `<button class="${baseClasses} ${statusClasses} ${textColor}" type="button" ${disabledAttr}>${buttonText}</button>`;
+    }
 
     div.innerHTML = html;
     document.body.appendChild(div);
@@ -167,13 +193,8 @@ fetch(`/tree/cytoscape?tree_id=${treeId}`) // pobiera dane z /tree/cytoscape -> 
   }
 
   cy.on('tap', 'node', function(evt) {
-    document.querySelectorAll('.popper-div').forEach(e => e.remove());
     let node = evt.target;
-    node.popper({
-      content: function(){
-        return makeDiv(node);
-      }
-    });
+    createPopper(node)
   });
 
   // cy.on('tap', function(evt) {

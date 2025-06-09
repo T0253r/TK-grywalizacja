@@ -17,6 +17,9 @@
   <script>
     window.SELECTED_TREE_ID = {{ selected_tree_id }};
   </script>
+  <script>
+    window.IS_LOGGED_IN = {{ 'true' if session.get('user') else 'false' }};
+  </script>
   <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/cytoscape-popper@2.0.0/cytoscape-popper.min.js"></script>
