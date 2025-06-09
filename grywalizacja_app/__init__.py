@@ -6,7 +6,7 @@ from flask import Flask, render_template, redirect, session, url_for
 from .auth import login_required
 from .tree_utils import get_tree
 from .database.queries.users import *
-from .database.models import db
+from extensions import db
 
 # w pliku .env należy wpisać:
 # DATABASE_URL=sqlite:///database.db

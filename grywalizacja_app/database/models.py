@@ -1,13 +1,7 @@
 from datetime import datetime, timezone
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select, func
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.hybrid import hybrid_property
-
-class Base(DeclarativeBase):
-    pass
-
-db = SQLAlchemy(model_class=Base)
+from extensions import db
 
 class User(db.Model):
     __tablename__ = 'users'
