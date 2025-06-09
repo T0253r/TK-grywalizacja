@@ -174,3 +174,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Node stuff because we only use it for dev dependencies for a part of the team
+package-lock.json
+package.json
+node_modules/

@@ -4,6 +4,8 @@ import requests
 from flask import (
     Blueprint, redirect, render_template, request, session, url_for, current_app
 )
+from requests import HTTPError
+
 from .helpers import parse_scope, check_for_guild
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -53,8 +55,11 @@ def callback():
         'scope': parse_scope(app.config.get('OAUTH_SCOPE')),
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    r = requests.post(f"{app.config.get('DISCORD_API_BASE_URL')}/oauth2/token", data=data, headers=headers)
-    r.raise_for_status()
+    try:
+        r = requests.post(f"{app.config.get('DISCORD_API_BASE_URL')}/oauth2/token", data=data, headers=headers)
+        r.raise_for_status()
+    except HTTPError as e:
+        return redirect(url_for('auth.login_invalid', code=e.response.status_code))
     credentials = r.json()
     access_token = credentials['access_token']
 
@@ -72,11 +77,26 @@ def callback():
     ).json()
 
     session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
+
+    if not session['is_member']:
+        session.pop('user', None)
+        session.pop('guild', None)
+        session.pop('is_member', None)
+        return redirect(url_for('auth.login_invalid', code=403))
+
     return redirect(url_for('dashboard'))
+
+
+@bp.route('/login-invalid')
+def login_invalid():
+    error_code = request.args.get('code', default=400, type=int)
+    return render_template('login_invalid.html', membership_required=current_app.config.get('KICK_NON_MEMBERS'),
+                           error_code=error_code)
 
 
 def login_required(view):
     """Wrapper for all the views that require the user to be logged in."""
+
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if not session.get('user'):
