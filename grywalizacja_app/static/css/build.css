@@ -18,6 +18,7 @@
 .user-rank {
   @apply
     flex
+    flex-row
     justify-between
     items-center
   text-white
@@ -48,12 +49,33 @@
     ease-in-out;
 }
 
+.h-button {
+  @apply
+    text-white
+    border-0
+    p-2.5
+    text-lg
+    rounded-xl
+    cursor-pointer
+    transition-colors
+    duration-200
+    ease-in-out
+    flex
+    flex-row
+    gap-2.5
+    items-center;
+}
+
 #cy {
-  @apply w-full h-full;
+  @apply w-full h-full px-20;
 }
 
 #ranking {
   @apply flex flex-col gap-2 items-center justify-center h-screen;
+}
+
+#admin-panel {
+  @apply flex flex-col overflow-auto mt-[10vh] gap-2 items-center justify-center h-[70vh];
 }
 
 .popper-div {

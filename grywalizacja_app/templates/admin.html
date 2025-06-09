@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Zadania do zatwierdzenia{% endblock %}
+
+{% block content %}
+    <div class="hdr"> Zadania </div>
+    <div id="admin-panel"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/admin_panel.js') }}"></script>
+{% endblock %}
