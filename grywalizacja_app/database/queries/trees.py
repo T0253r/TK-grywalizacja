@@ -43,10 +43,14 @@ def get_unpublished_trees(author_id):
 
 def get_tree(id):
     '''
-    Gets tree by id.
+    Gets tree by id. Throws NoResultFound and MultipleResultsFound.
     '''
-    tree = db.get_or_404(Tree, id)
-    return _prettify_tree(tree)
+    try:
+        tree = Tree.query.filter_by(id=id).one()
+        return _prettify_tree(tree)
+    except Exception as e:
+        print(f'Exception getting tree: {str(e)}')
+        raise
 
 def add_tree(name, json_structure, created_by):
     '''
@@ -59,8 +63,48 @@ def add_tree(name, json_structure, created_by):
 
 def delete_tree(id):
     '''
-    Deletes a tree from database.
+    Deletes a tree from database. Throws NoResultFound and MultipleResultsFound.
     '''
-    tree = get_tree(id)
-    db.session.delete(tree)
-    db.session.commit()
+    try:
+        tree = Tree.query.filter_by(id=id).one()
+        db.session.delete(tree)
+        db.session.commit()
+    except Exception as e:
+        print(f'Exception deleting tree: {str(e)}')
+        raise
+
+def make_public(id):
+    '''
+    Makes tree public. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        tree : Tree = Tree.query.filter_by(id=id).one()
+        tree.make_public()
+        db.session.commit()
+    except Exception as e:
+        print(f'Exception making tree public: {str(e)}')
+        raise
+
+def change_tree_name(id, new_name):
+    '''
+    Changes name of tree. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        tree : Tree = Tree.query.filter_by(id=id).one()
+        tree.change_name(new_name)
+        db.session.commit()
+    except Exception as e:
+        print(f'Exception changing name of tree: {str(e)}')
+        raise
+
+def update_json_structure(id, json_structure):
+    '''
+    Updates json structure and tasks. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        tree : Tree = Tree.query.filter_by(id=id).one()
+        tree.update_json_structure(json_structure)
+        db.session.commit()
+    except Exception as e:
+        print(f'Exception changing json structure of tree: {str(e)}')
+        raise

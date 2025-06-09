@@ -32,13 +32,13 @@ def get_non_admin_users():
     users = User.query.filter_by(is_admin=False).all()
     return _prettify_users(users)
 
-def users_ranking():
+def users_ranking(n_places=3):
     '''
-    Gets the top 3 users with the most points.
+    Gets the top n_places users with the most points.
     '''
     users = User.query.filter_by(is_admin=False)\
                       .order_by(User.points.desc())\
-                      .limit(3)\
+                      .limit(n_places)\
                       .all()
     return _prettify_users(users)
 
@@ -78,8 +78,45 @@ def add_admin(discord_id, email, name):
 
 def delete_user_by_discord_id(discord_id):
     '''
-    Deletes user by discord_id.
+    Deletes user by discord_id. Throws NoResultFound and MultipleResultsFound.
     '''
-    user = User.query.filter_by(discord_id=discord_id).first_or_404()
-    db.session.delete(user)
-    db.session.commit()
+    try:
+        user = User.query.filter_by(discord_id=discord_id).one()
+        db.session.delete(user)
+        db.session.commit()
+    except Exception as e:
+        print(f'Error deleting user: {str(e)}')
+        raise
+
+def make_admin(discord_id):
+    '''
+    Makes user admin. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        user : User = User.query.filter_by(discord_id=discord_id).one()
+        user.make_admin()
+    except Exception as e:
+        print(f'Error making admin: {str(e)}')
+        raise
+
+def revoke_admin(discord_id):
+    '''
+    Revokes user's admin. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        user : User = User.query.filter_by(discord_id=discord_id).one()
+        user.revoke_admin()
+    except Exception as e:
+        print(f'Error revoking admin: {str(e)}')
+        raise
+
+def change_user_name(discord_id, new_name):
+    '''
+    Changes user's name. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        user : User = User.query.filter_by(discord_id=discord_id).one()
+        user.change_name(new_name)
+    except Exception as e:
+        print(f'Error changing user name: {str(e)}')
+        raise

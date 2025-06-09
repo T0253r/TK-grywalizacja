@@ -32,14 +32,16 @@ def get_tasks_by_tree_id(tree_id):
 @overload
 def get_task(tree_id, node_id):
     '''
-    Gets a task of a tree by task id defined in that tree.
+    Gets a task of a tree by task id defined in that tree. 
+    Throws NoResultFound and MultipleResultsFound.
     '''
     ...
 
 @overload
 def get_task(id):
     '''
-    Gets a task by id.
+    Gets a task by id. 
+    Throws NoResultFound and MultipleResultsFound.
     '''
     ...
 
@@ -50,14 +52,21 @@ def get_task(*args):
     - get_task(tree_id, node_id)
     '''
     if len(args) == 1:
-        task = Task.query.get_or_404(args[0])
+        try:
+            id = args
+            return _prettify_task(Task.query.filter_by(id=id).one())
+        except Exception as e:
+            print(f'Exception getting task {str(e)}')
+            raise
     elif len(args) == 2:
-        tree_id, node_id = args
-        task = Task.query.filter_by(tree_id=tree_id, node_id=node_id).first_or_404()
+        try:
+            tree_id, node_id = args
+            return _prettify_task(Task.query.filter_by(tree_id=tree_id, node_id=node_id).one())
+        except Exception as e:
+            print(f'Exception getting task {str(e)}')
+            raise
     else:
         raise TypeError('Invalid arguments - expected either get_task(id) or get_task(tree_id, node_id)')
-    
-    return task
 
 def add_task(tree_id, node_id, name, description, points):
     task = Task(tree_id= tree_id, node_id=node_id, name=name, description=description, points=points)
@@ -76,14 +85,16 @@ def add_all_tasks(tree_id, json_structure):
 @overload
 def delete_task(tree_id, node_id):
     '''
-    Deletes a task of a tree by task id defined in that tree.
+    Deletes a task of a tree by task id defined in that tree. 
+    Throws NoResultFound and MultipleResultsFound.
     '''
     ...
 
 @overload
 def delete_task(id):
     '''
-    Deletes a task by id.
+    Deletes a task by id. 
+    Throws NoResultFound and MultipleResultsFound.
     '''
     ...
 
@@ -93,10 +104,54 @@ def delete_task(*args):
     - delete_task(id) 
     - delete_task(tree_id, node_id)
     '''
-    if len(args) == 1 or len(args) == 2:
-        task = get_task(args)
+    if len(args):
+        try:
+            id = args
+            task = Task.query.filter_by(id=id).one()
+            db.session.delete(task)
+        except Exception as e:
+            print(f'Exception deleting task {str(e)}')
+            raise
+    elif len(args) == 2:
+        try:
+            tree_id, node_id = args
+            task = Task.query.filter_by(tree_id=tree_id, node_id=node_id).one()
+            db.session.delete(task)
+        except Exception as e:
+            print(f'Exception deleting task {str(e)}')
+            raise
     else:
         raise TypeError('Invalid arguments - expected either get_task(id) or get_task(tree_id, node_id)')
-    
-    db.session.delete(task)
-    db.session.commit()
+
+def change_task_name(id, new_name):
+    '''
+    Changes name of task. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        task : Task = Task.query.filter_by(id=id).one()
+        task.change_name(new_name)
+    except Exception as e:
+        print(f'Exception changing name of task {str(e)}')
+        raise
+
+def change_description(id, description):
+    '''
+    Changes description of task. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        task : Task = Task.query.filter_by(id=id).one()
+        task.change_description(description)
+    except Exception as e:
+        print(f'Exception changing description of task {str(e)}')
+        raise
+
+def change_points(id, new_points):
+    '''
+    Changes number of points of task. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        task : Task = Task.query.filter_by(id=id).one()
+        task.change_points(new_points)
+    except Exception as e:
+        print(f'Exception changing points of task {str(e)}')
+        raise
