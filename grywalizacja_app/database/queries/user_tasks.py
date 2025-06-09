@@ -33,8 +33,6 @@ def get_user_tasks(user_id):
     '''
     ...
 
-    from typing import overload
-
 def get_user_tasks(*, task_id = None, user_id = None):
     '''
     Implementation of:
@@ -49,13 +47,17 @@ def get_user_tasks(*, task_id = None, user_id = None):
         raise ValueError("Musisz podać albo task_id, albo user_id")
     
     return _prettify_user_tasks(user_tasks)
-    
+
 def get_user_task(task_id, user_id):
     '''
-    Gets one user task by task and user id.
+    Gets one user task by task and user id. Throws NoResultFound and MultipleResultsFound.
     '''
-    user_task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one_or_404()
-    return _prettify_user_task(user_task)
+    try:
+        user_task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one()
+        return _prettify_user_task(user_task)
+    except Exception as e:
+        print(f'Error getting user_task: {str(e)}')
+        raise
 
 def add_user_task(task_id, user_id, status=None, is_visible=None):
     '''
@@ -87,8 +89,34 @@ def add_user_tasks_by_task(task_id):
 
 def delete_user_task(task_id, user_id):
     '''
-    Deletes a user task from database.
+    Deletes a user task from database. Throws NoResultFound and MultipleResultsFound.
     '''
-    user_task = get_user_task(task_id, user_id)
-    db.session.delete(user_task)
-    db.session.commit()
+    try:
+        user_task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one()
+        db.session.delete(user_task)
+        db.session.commit()
+    except Exception as e:
+        print(f'Error deleting user_task: {str(e)}')
+        raise
+
+def change_status(user_id, task_id, new_status):
+    '''
+    Changes status of a user_task. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        user_task : User_Task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one()
+        user_task.change_status(new_status)
+    except Exception as e:
+        print(f'Error changing status: {str(e)}')
+        raise
+
+def change_visibility(user_id, task_id, is_visible):
+    '''
+    Changes visibility of a user_task. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        user_task : User_Task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one()
+        user_task.change_visibility(is_visible)
+    except Exception as e:
+        print(f'Error changing visibility: {str(e)}')
+        raise
