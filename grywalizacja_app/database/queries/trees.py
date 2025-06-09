@@ -1,4 +1,5 @@
-from grywalizacja_app.database.models import db, Tree
+from extensions import db
+from grywalizacja_app.database.models import Tree
 from grywalizacja_app.database.queries.tasks import add_all_tasks
 
 
