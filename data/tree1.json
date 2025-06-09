@@ -2,19 +2,163 @@
   "nodes": [
     {
       "id": 0,
-      "name": "Root of Tree 2",
-      "status": 2,
-      "description": "Start node for tree 2",
-      "points": 8,
+      "name": "Zadanie główne",
+      "status": 0,
+      "description": "Opis: Główne zadanie projektu. Ogólny cel i punkt wyjścia całej struktury.",
+      "points": 10,
       "children": [1]
     },
     {
       "id": 1,
-      "name": "Leaf 2",
-      "status": 0,
-      "description": "Leaf node 2",
+      "name": "Etap 1",
+      "status": 1,
+      "description": "Opis: Pierwszy etap realizacji zadania głównego.",
       "points": 3,
+      "children": [2]
+    },
+    {
+      "id": 2,
+      "name": "Etap 2",
+      "status": 2,
+      "description": "Opis: Drugi etap, kontynuacja działań po zakończeniu Etapu 1.",
+      "points": 5,
+      "children": [3, 10, 13]
+    },
+    {
+      "id": 3,
+      "name": "Etap 3",
+      "status": 0,
+      "description": "Opis: Trzeci etap projektu, rozwinięcie działań z poprzednich etapów.",
+      "points": 2,
+      "children": [4]
+    },
+    {
+      "id": 4,
+      "name": "Etap 4",
+      "status": 1,
+      "description": "Opis: Czwarty etap, prowadzący do dalszych podzadań.",
+      "points": 6,
+      "children": [5, 6]
+    },
+    {
+      "id": 5,
+      "name": "Etap 5",
+      "status": 2,
+      "description": "Opis: Piąty etap, jeden z końcowych etapów głównego ciągu.",
+      "points": 4,
+      "children": [7]
+    },
+    {
+      "id": 6,
+      "name": "Offshoot A",
+      "status": 0,
+      "description": "Opis: Odrębna gałąź działań (A), rozwijająca się równolegle do głównego ciągu.",
+      "points": 7,
+      "children": [8]
+    },
+    {
+      "id": 7,
+      "name": "Etap 6",
+      "status": 0,
+      "description": "Opis: Szósty etap, prowadzący do kolejnych działań oraz łączący wyniki z różnych ścieżek.",
+      "points": 8,
+      "children": [9, 12]
+    },
+    {
+      "id": 8,
+      "name": "Offshoot A1",
+      "status": 1,
+      "description": "Opis: Podetap w ramach gałęzi A, kontynuacja Offshoot A.",
+      "points": 2,
+      "children": [12]
+    },
+    {
+      "id": 9,
+      "name": "Etap 7",
+      "status": 1,
+      "description": "Opis: Siódmy etap, będący przedostatnim krokiem przed scaleniem ścieżek.",
+      "points": 9,
+      "children": [14]
+    },
+    {
+      "id": 10,
+      "name": "Offshoot B",
+      "status": 0,
+      "description": "Opis: Kolejna równoległa gałąź działań (B), alternatywna ścieżka realizacji.",
+      "points": 4,
+      "children": [11]
+    },
+    {
+      "id": 11,
+      "name": "Offshoot B1",
+      "status": 2,
+      "description": "Opis: Podetap w ramach gałęzi B, prowadzący do głównego ciągu.",
+      "points": 5,
+      "children": [7]
+    },
+    {
+      "id": 12,
+      "name": "Merge Node 1",
+      "status": 2,
+      "description": "Opis: Węzeł scalający rezultaty z różnych ścieżek (gałęzi).",
+      "points": 6,
+      "children": [15]
+    },
+    {
+      "id": 13,
+      "name": "Offshoot C",
+      "status": 0,
+      "description": "Opis: Trzecia równoległa gałąź działań (C), alternatywna ścieżka projektu.",
+      "points": 1,
       "children": []
+    },
+    {
+      "id": 14,
+      "name": "Merge Node 2",
+      "status": 1,
+      "description": "Opis: Kolejny węzeł scalający wyniki kilku ścieżek przed finalnymi etapami.",
+      "points": 7,
+      "children": [15]
+    },
+    {
+      "id": 15,
+      "name": "Etap 8",
+      "status": 0,
+      "description": "Opis: Ósmy etap, łączący rozgałęzienia i przygotowujący do zakończenia.",
+      "points": 10,
+      "children": [16, 17]
+    },
+    {
+      "id": 16,
+      "name": "Etap 9",
+      "status": 1,
+      "description": "Opis: Dziewiąty etap, niemal końcowy krok projektu.",
+      "points": 3,
+      "children": [18]
+    },
+    {
+      "id": 17,
+      "name": "Offshoot D",
+      "status": 0,
+      "description": "Opis: Dodatkowa gałąź działań (D), mogąca mieć wpływ na końcowe etapy.",
+      "points": 2,
+      "children": [19]
+    },
+    {
+      "id": 18,
+      "name": "Etap 10",
+      "status": 2,
+      "description": "Opis: Ostatni etap projektu, podsumowanie i zamknięcie wszystkich działań.",
+      "points": 12,
+      "children": []
+    },
+    {
+      "id": 19,
+      "name": "Offshoot D1",
+      "status": 1,
+      "description": "Opis: Podetap w ramach gałęzi D, łączący się ponownie z głównym ciągiem.",
+      "points": 5,
+      "children": [16]
     }
   ]
 }
