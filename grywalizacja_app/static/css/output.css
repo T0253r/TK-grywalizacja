@@ -255,6 +255,9 @@
   .justify-center {
     justify-content: center;
   }
+  .rounded-full {
+    border-radius: calc(infinity * 1px);
+  }
   .bg-amber-400 {
     background-color: var(--color-amber-400);
   }
