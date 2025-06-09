@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, session, url_for
 
 from .auth import login_required
+from .admin_options import admin_only
 from .tree_utils import get_tree
 from .database.queries.users import *
 from .database.queries.user_tasks import *
@@ -95,7 +96,7 @@ def create_app(test_config=None):
         return render_template('ranking.html')
 
     @app.route('/admin')
-    @login_required
+    @admin_only
     def admin():
         return render_template('admin.html')
 

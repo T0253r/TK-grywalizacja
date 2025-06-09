@@ -3,19 +3,22 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="flex flex-col justify-center items-center h-screen max-w-[800px] mx-auto">
-        <h1>Welcome, {{ user.global_name }}</h1>
-        <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png" alt="Avatar" width="100">
-        <br>
-        <a href="{{ url_for('auth.logout') }}">Logout</a>
 
-        <p>
-            {% if is_member %}
-                You are a member
-            {% else %}
-                You are not a member
-            {% endif %}
-            of {{ guild.name }}
-        </p>
+<div class="h-[256px] max-w-[700px] mx-auto my-auto grid grid-cols-[256px_auto] grid-rows-3 gap-2">
+    <div class="row-span-3 aspect-square max-w-[256px] flex justify-end items-center p-4">
+        <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png" alt="Avatar" class="rounded-full w-full h-full object-cover ">
     </div>
+    <div class="flex items-center p-4">
+        <span class="text-4xl">cześć, {{ user.global_name }}!</span>
+    </div>
+    <div class="col-start-2 flex items-center p-4">
+        <span class="text-2xl">twój serwer: {{ guild.name }}</span>
+    </div>
+    <div class="col-start-2 row-start-3 flex items-center p-4">
+        <button class="button !p-2 bg-gray-400 hover:bg-gray-300" id="login" onclick="location.href='/login-with-discord'">
+           <span class="text-xl">wyloguj</span>
+        </button>
+    </div>
+</div>
+
 {% endblock %}
