@@ -26,6 +26,7 @@ def create_app(test_config=None):
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
         DISCORD_CLIENT_SECRET=os.getenv('DISCORD_CLIENT_SECRET'),
         DISCORD_CLIENT_ID=os.getenv('DISCORD_CLIENT_ID'),
+        KICK_NON_MEMBERS = True,
         OAUTH_SCOPE='identify guilds email',
         BASE_URL='http://localhost:5000',
         PORT=5000,
