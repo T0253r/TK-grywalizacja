@@ -63,7 +63,7 @@ def get_admin_by_discord_id(discord_id):
     user = User.query.filter_by(discord_id=discord_id, is_admin=True).first()
     return _prettify_user(user) if user else None
 
-def ehhhhhhhhh(discord_id):
+def get_user_object_by_id(discord_id):
     return User.query.filter_by(discord_id=discord_id).first_or_404()
 
 def _add_any_user(discord_id, email, name, is_admin=False):

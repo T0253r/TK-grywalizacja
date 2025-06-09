@@ -84,7 +84,6 @@ def create_app(test_config=None):
             add_non_admin_user(session['user']['id'], session['user']['email'], session['user']['global_name'])
         finally:
             if session['is_admin'] is None:
-                ehhhhhhhhh(session['user']['id']).make_admin()
                 session['is_admin'] = get_admin_by_discord_id(session['user']['id']) is not None
             return render_template('dashboard.html', user=session['user'], is_member=session['is_member'],
                                    guild=session['guild'])

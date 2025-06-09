@@ -1,3 +1,5 @@
+from sqlalchemy.orm import joinedload
+
 from grywalizacja_app.database.models import db, User_Task, Task, User
 from typing import overload
 
@@ -109,6 +111,7 @@ def change_status(user_id, task_id, new_status):
         user_task : User_Task = User_Task.query.filter_by(user_id=user_id, task_id=task_id).one()
         user_task.change_status(new_status)
     except Exception as e:
+        print(user_id, task_id)
         print(f'Error changing status: {str(e)}')
         raise
 
@@ -137,7 +140,7 @@ def _prettify_user_task_with_related(user_task: User_Task):
     '''
     user, task = _get_foreign_names(user_task)
     return {
-        'user_id': user_task.user_id,
+        'user_id': str(user_task.user_id),
         'task_id': user_task.task_id,
         'status': user_task.status,
         'is_visible': user_task.is_visible,
@@ -155,8 +158,5 @@ def get_user_tasks_by_status(status=0):
     '''
     Gets all user tasks with given status.
     '''
-    user_tasks = User_Task.query.options(
-        joinedload(User_Task.user),
-        joinedload(User_Task.task)
-    ).filter_by(status=status).all()
+    user_tasks = User_Task.query.filter_by(status=status).all()
     return _prettify_user_tasks_with_related(user_tasks)

@@ -31,7 +31,6 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --radius-xl: 0.75rem;
-    --drop-shadow-xs: 0 1px 1px rgb(0 0 0 / 0.05);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -221,6 +220,9 @@
   .mt-auto {
     margin-top: auto;
   }
+  .mr-2\.5 {
+    margin-right: calc(var(--spacing) * 2.5);
+  }
   .block {
     display: block;
   }
@@ -238,6 +240,12 @@
   }
   .max-w-20 {
     max-width: calc(var(--spacing) * 20);
+  }
+  .max-w-70 {
+    max-width: calc(var(--spacing) * 70);
+  }
+  .max-w-100 {
+    max-width: calc(var(--spacing) * 100);
   }
   .max-w-120 {
     max-width: calc(var(--spacing) * 120);
@@ -319,20 +327,27 @@
   .text-white {
     color: var(--color-white);
   }
+  .hover\:brightness-130 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-brightness: brightness(130%);
+        filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+      }
+    }
+  }
+  .hover\:brightness-140 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-brightness: brightness(140%);
+        filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+      }
+    }
+  }
   .hover\:invert {
     &:hover {
       @media (hover: hover) {
         --tw-invert: invert(100%);
         filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-      }
-    }
-  }
-  .hover\:backdrop-brightness-110 {
-    &:hover {
-      @media (hover: hover) {
-        --tw-backdrop-brightness: brightness(110%);
-        -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
-        backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
       }
     }
   }
@@ -432,12 +447,14 @@
   gap: calc(var(--spacing) * 2);
 }
 #admin-panel {
+  margin-top: 10vh;
   display: flex;
   height: 70vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: calc(var(--spacing) * 2);
+  overflow: auto;
 }
 .popper-div {
   border: 1px solid #888;
@@ -509,42 +526,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-backdrop-blur {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-brightness {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-contrast {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-grayscale {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-hue-rotate {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-invert {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-opacity {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-saturate {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-sepia {
-  syntax: "*";
-  inherits: false;
-}
 @property --tw-border-style {
   syntax: "*";
   inherits: false;
@@ -575,15 +556,6 @@
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
-      --tw-backdrop-blur: initial;
-      --tw-backdrop-brightness: initial;
-      --tw-backdrop-contrast: initial;
-      --tw-backdrop-grayscale: initial;
-      --tw-backdrop-hue-rotate: initial;
-      --tw-backdrop-invert: initial;
-      --tw-backdrop-opacity: initial;
-      --tw-backdrop-saturate: initial;
-      --tw-backdrop-sepia: initial;
       --tw-border-style: solid;
       --tw-duration: initial;
       --tw-ease: initial;
