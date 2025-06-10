@@ -77,7 +77,7 @@ def callback():
         headers={'Authorization': f'Bearer {access_token}'}
     ).json()
 
-    session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
+    #session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
     session['is_admin'] = None # nie wiem czy bedzie sprawiac problemow
     return redirect(url_for('dashboard'))
 
