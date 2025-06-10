@@ -75,7 +75,7 @@
 }
 
 #admin-panel {
-  @apply flex flex-col overflow-auto mt-[10vh] gap-2 items-center justify-center h-[70vh];
+  @apply flex flex-col overflow-y-auto mt-[8vh] gap-2 pl-4 items-center justify-start w-[50vw] mx-auto h-[72vh];
 }
 
 .popper-div {

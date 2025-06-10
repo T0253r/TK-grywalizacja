@@ -20,13 +20,13 @@
             <p>
                 {{ session.user.global_name }}
             </p>
-            <img src="https://cdn.discordapp.com/avatars/{{ session.user.id }}/{{ session.user.avatar }}.png" alt="Avatar" class="rounded-full w-16">
+            <img src="https://cdn.discordapp.com/avatars/{{ session.user.id }}/{{ session.user.avatar }}.png" alt="Avatar" class="rounded-full w-12 ml-2">
         </button>
 
     {% else %}
-        <button class="h-button" id="user" onclick="location.href='{{ url_for('auth.login_with_discord') }}'" title="logowanie">
+        <button class="h-button" id="user" onclick="location.href='{{ url_for('auth.login_with_discord') }}'" title="Logowanie">
             <p>Log in</p>
-            <img src="../static/images/user_icon.png">
+            <img src="../static/images/user_icon.png" class="w-12 ml-2">
         </button>
     {% endif %}
 </div>

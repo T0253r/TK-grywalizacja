@@ -2,20 +2,23 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{%  block content %}
-    <div class="flex flex-col text-2xl gap-4 justify-center items-center h-screen max-w-[800px] mx-auto">
-        <h1>Welcome, {{ user.global_name }}</h1>
-        <img class="rounded-lg" src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png" alt="Avatar" width="128">
-        <br>
-        <a class="underline" href="{{ url_for('auth.logout') }}">Logout</a>
+{% block content %}
 
-        <p>
-            {% if is_member %}
-                You are a member
-            {% else %}
-                You are not a member
-            {% endif %}
-            of {{ guild.name  }}
-        </p>
+<div class="h-[256px] max-w-[700px] mx-auto my-auto grid grid-cols-[256px_auto] grid-rows-3 gap-2">
+    <div class="row-span-3 aspect-square max-w-[256px] flex justify-end items-center p-4">
+        <img src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png" alt="Avatar" class="rounded-full w-full h-full object-cover">
     </div>
+    <div class="flex items-center p-4">
+        <span class="text-4xl">cześć, {{ user.global_name }}!</span>
+    </div>
+    <div class="col-start-2 flex items-center p-4">
+        <span class="text-2xl">twój serwer: {{ guild.name }}</span>
+    </div>
+    <div class="col-start-2 row-start-3 flex items-center p-4">
+        <button class="button !p-4 bg-gray-400 hover:bg-gray-300" id="logout" onclick="location.href='{{ url_for('auth.logout') }}'">
+           <span class="text-xl">wyloguj</span>
+        </button>
+    </div>
+</div>
+
 {% endblock %}

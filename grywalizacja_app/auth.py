@@ -72,6 +72,13 @@ def callback():
         session.pop('is_member', None)
         return redirect(url_for('auth.login_invalid', code=403))
 
+    guilds = requests.get(
+        f"{app.config.get('DISCORD_API_BASE_URL')}/users/@me/guilds",
+        headers={'Authorization': f'Bearer {access_token}'}
+    ).json()
+
+    #session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
+    session['is_admin'] = None # nie wiem czy bedzie sprawiac problemow
     return redirect(url_for('dashboard'))
 
 

@@ -17,12 +17,13 @@ fetch('/admin/tasks')
         accept_general.appendChild(yes)
 
         const container = document.getElementById('admin-panel')
+        container.style.scrollbarGutter = 'stable'
 
         tasks.forEach(task => {
             const div = document.createElement('div');
             div.classList.add(`user-rank`, 'bg-gray-400')
-            div.innerHTML = `<input type='text' class="max-w-70" disabled name='user_name' value='${task['user']}'/>
-                            <input type='text' class="text-right max-w-100 mr-2.5" disabled name='user_points' value='${task['task']}'/>`
+            div.innerHTML = `<input type='text' class="max-w-60" disabled name='user_name' value='${task['user']}'/>
+                            <input type='text' class="text-right max-w-90 mr-2.5" disabled name='user_points' value='${task['task']}'/>`
             console.log(task['user_id'])
             const reject = reject_general.cloneNode(true)
             const accept = accept_general.cloneNode(true)

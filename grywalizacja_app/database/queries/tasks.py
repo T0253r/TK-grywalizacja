@@ -1,4 +1,5 @@
-from grywalizacja_app.database.models import db, Task
+from grywalizacja_app.extensions import db
+from grywalizacja_app.database.models import Task
 from grywalizacja_app.database.queries.user_tasks import add_user_tasks_by_task
 from typing import overload
 

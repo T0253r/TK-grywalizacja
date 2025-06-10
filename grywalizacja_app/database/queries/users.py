@@ -1,4 +1,5 @@
-from grywalizacja_app.database.models import db, User
+from grywalizacja_app.extensions import db
+from grywalizacja_app.database.models import User
 
 
 def _prettify_user(user: User):

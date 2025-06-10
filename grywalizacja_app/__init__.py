@@ -4,11 +4,12 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, session, url_for, request, jsonify
 
 from .auth import login_required
+from .admin_options import admin_only
 from .tree_utils import get_tree, to_cytoscape_format
 from .database.queries.users import *
 from .database.queries.user_tasks import *
 from .database.queries.trees import get_public_trees, get_tree as get_tree_db
-from .database.models import db
+from grywalizacja_app.extensions import db
 
 # w pliku .env należy wpisać:
 # DATABASE_URL=sqlite:///database.db
@@ -83,6 +84,7 @@ def create_app(test_config=None):
     def users():
         return users_ranking()
 
+
     @app.route('/dashboard')
     @login_required
     def dashboard():
@@ -105,7 +107,7 @@ def create_app(test_config=None):
         return render_template('ranking.html')
 
     @app.route('/admin')
-    @login_required
+    @admin_only
     def admin():
         return render_template('admin.html')
 
