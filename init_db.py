@@ -1,5 +1,5 @@
 from grywalizacja_app import create_app
-from extensions import db
+from grywalizacja_app.extensions import db
 
 if __name__ == '__main__':
     app = create_app()
