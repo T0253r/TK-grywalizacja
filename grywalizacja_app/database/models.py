@@ -66,7 +66,6 @@ class Tree(db.Model):
     
     def update_json_structure(self, json_structure):
         self.json_structure = json_structure
-        # updating all the tasks
         db.session.commit()
 
 class Task(db.Model):
