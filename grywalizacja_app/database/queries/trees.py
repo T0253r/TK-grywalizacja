@@ -70,7 +70,7 @@ def get_tree_json_by_user(id, discord_id):
             json_structure['nodes'][task['node_id']]['status'] = status
             json_structure['nodes'][task['node_id']]['is_visible'] = is_visible
 
-            return json_structure
+        return json_structure
     except Exception as e:
         print(f"Exception getting tree's json: {str(e)}")
         raise
