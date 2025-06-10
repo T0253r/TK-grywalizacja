@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="flex flex-col justify-center items-center h-screen max-w-[800px] mx-auto">
-        <button class="button !p-5 bg-indigo-400 hover:bg-indigo-300" id="login" onclick="location.href='{{ url_for('auth.login_with_discord') }}'">
+        <button class="button p-5 bg-indigo-400 hover:bg-indigo-300" id="login" onclick="location.href='{{ url_for('auth.login_with_discord') }}'">
            <span class="text-4xl">Login with Discord</span>
         </button>
         <p class="mt-8 text-lg font-medium text-pretty text-justify text-gray-500 sm:text-xl/8">

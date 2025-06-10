@@ -21,7 +21,7 @@ fetch('/admin/tasks')
 
         tasks.forEach(task => {
             const div = document.createElement('div');
-            div.classList.add(`user-rank`, 'bg-gray-400')
+            div.classList.add(`user-rank`, 'bg-gray-400', 'mb-4');
             div.innerHTML = `<input type='text' class="max-w-60" disabled name='user_name' value='${task['user']}'/>
                             <input type='text' class="text-right max-w-90 mr-2.5" disabled name='user_points' value='${task['task']}'/>`
             console.log(task['user_id'])
@@ -75,10 +75,10 @@ fetch('/admin/tasks')
             div.appendChild(accept)
             container.appendChild(div)
         })
-        container.addEventListener('wheel', function (e) {
-            if (e.deltaY !== 0) {
-                e.preventDefault();
-                container.scrollTop += e.deltaY;
-            }
-        }, {passive: false});
+        // container.addEventListener('wheel', function (e) {
+        //     if (e.deltaY !== 0) {
+        //         e.preventDefault();
+        //         container.scrollTop += e.deltaY;
+        //     }
+        // }, {passive: false});
     });
