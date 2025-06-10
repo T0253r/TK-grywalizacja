@@ -21,7 +21,9 @@
         {% endif %}
     </p>
     <a href="{{ url_for('dashboard') }}">
-        <img src="../static/images/user_icon.png">
+        {% if session.user %}
+            <img class="rounded-full" src="https://cdn.discordapp.com/avatars/{{ session.user.id }}/{{ session.user.avatar }}.png" alt="Avatar" width="64">
+        {% endif %}
     </a>
 </div>
 
