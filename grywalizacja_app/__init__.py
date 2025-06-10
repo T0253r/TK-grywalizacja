@@ -8,7 +8,7 @@ from .admin_options import admin_only
 from .tree_utils import get_tree, to_cytoscape_format
 from .database.queries.users import *
 from .database.queries.user_tasks import *
-from .database.queries.trees import get_public_trees, get_tree as get_tree_db
+from .database.queries.trees import get_public_trees, get_tree_json_by_user, get_tree as get_tree_db
 from grywalizacja_app.extensions import db
 
 # w pliku .env należy wpisać:
@@ -77,8 +77,13 @@ def create_app(test_config=None):
             if not trees:
                 return jsonify({'nodes': [], 'edges': []})
             tree_id = trees[0]['id'] #  ponownie, domyslnie wczytuje sie pierwsze
-        tree = get_tree_db(tree_id)
-        return jsonify(to_cytoscape_format(tree['json_structure'])) # nie jestem pewien czy to zadziała
+
+        if not 'user' in session:
+            tree_json = get_tree_db(tree_id)['json_structure']
+        else:
+            tree_json = get_tree_json_by_user(tree_id, session['user']['id'])
+
+        return jsonify(to_cytoscape_format(tree_json))
 
     @app.route('/users')
     def users():
