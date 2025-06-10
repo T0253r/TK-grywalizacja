@@ -94,6 +94,7 @@ def create_app(test_config=None):
             user_data = get_user_by_discord_id(session['user']['id'])
         except NotFound:
             add_non_admin_user(session['user']['id'], session['user']['email'], session['user']['global_name'])
+            add_user_tasks_by_user(session['user']['id'])
         finally:
             if session['is_admin'] is None:
                 session['is_admin'] = get_admin_by_discord_id(session['user']['id']) is not None
