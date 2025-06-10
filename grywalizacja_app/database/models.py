@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from sqlalchemy import select, func
 from sqlalchemy.ext.hybrid import hybrid_property
-from extensions import db
+from grywalizacja_app.extensions import db
 
 class User(db.Model):
     __tablename__ = 'users'
