@@ -8,7 +8,7 @@ from .admin_options import admin_only
 from .tree_utils import get_tree
 from .database.queries.users import *
 from .database.queries.user_tasks import *
-from .database.models import db
+from grywalizacja_app.extensions import db
 
 # w pliku .env należy wpisać:
 # DATABASE_URL=sqlite:///database.db
@@ -26,6 +26,7 @@ def create_app(test_config=None):
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
         DISCORD_CLIENT_SECRET=os.getenv('DISCORD_CLIENT_SECRET'),
         DISCORD_CLIENT_ID=os.getenv('DISCORD_CLIENT_ID'),
+        KICK_NON_MEMBERS = True,
         OAUTH_SCOPE='identify guilds email',
         BASE_URL='http://localhost:5000',
         PORT=5000,

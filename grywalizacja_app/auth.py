@@ -1,9 +1,12 @@
+"""Set of endpoints and helper function related to authorization"""
 import functools
 
 import requests
 from flask import (
     Blueprint, redirect, render_template, request, session, url_for, current_app
 )
+from requests import HTTPError
+
 from .helpers import parse_scope, check_for_guild
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -21,7 +24,6 @@ def login_with_discord():
     app = current_app
     c_id = app.config.get('DISCORD_CLIENT_ID')
     redirect_url = app.config.get('BASE_URL') + url_for('auth.callback')
-    print(redirect_url)
     oauth_scope_raw = app.config.get('OAUTH_SCOPE')
     oauth_scope = parse_scope(oauth_scope_raw)
 
@@ -53,18 +55,22 @@ def callback():
         'scope': parse_scope(app.config.get('OAUTH_SCOPE')),
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    r = requests.post(f"{app.config.get('DISCORD_API_BASE_URL')}/oauth2/token", data=data, headers=headers)
-    r.raise_for_status()
+    try:
+        r = requests.post(f"{app.config.get('DISCORD_API_BASE_URL')}/oauth2/token", data=data, headers=headers,
+                          timeout=5)
+        r.raise_for_status()
+    except HTTPError as e:
+        return redirect(url_for('auth.login_invalid', code=e.response.status_code))
     credentials = r.json()
     access_token = credentials['access_token']
 
-    # Fetch user info
-    user_info = requests.get(
-        f"{app.config.get('DISCORD_API_BASE_URL')}/users/@me",
-        headers={'Authorization': f'Bearer {access_token}'}
-    ).json()
+    fetch_user_info(access_token)
 
-    session['user'] = user_info
+    if not session.get('is_member'):
+        session.pop('user', None)
+        session.pop('guild', None)
+        session.pop('is_member', None)
+        return redirect(url_for('auth.login_invalid', code=403))
 
     guilds = requests.get(
         f"{app.config.get('DISCORD_API_BASE_URL')}/users/@me/guilds",
@@ -72,12 +78,21 @@ def callback():
     ).json()
 
     session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))
-    session['is_admin'] = None
+    session['is_admin'] = None # nie wiem czy bedzie sprawiac problemow
     return redirect(url_for('dashboard'))
+
+
+@bp.route('/login-invalid')
+def login_invalid():
+    """Endpoint to inform user that the log-in failed."""
+    error_code = request.args.get('code', default=400, type=int)
+    return render_template('login_invalid.html', membership_required=current_app.config.get('KICK_NON_MEMBERS'),
+                           error_code=error_code)
 
 
 def login_required(view):
     """Wrapper for all the views that require the user to be logged in."""
+
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if not session.get('user'):
@@ -86,3 +101,23 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+def fetch_user_info(access_token: str) -> None:
+    """Gets user data from discord and stores it in current browser session."""
+    app = current_app
+    user_info = requests.get(
+        f"{app.config.get('DISCORD_API_BASE_URL')}/users/@me",
+        headers={'Authorization': f'Bearer {access_token}'},
+        timeout=5
+    ).json()
+
+    session['user'] = user_info
+
+    guilds = requests.get(
+        f"{app.config.get('DISCORD_API_BASE_URL')}/users/@me/guilds",
+        headers={'Authorization': f'Bearer {access_token}'},
+        timeout=5
+    ).json()
+
+    session['is_member'], session['guild'] = check_for_guild(guilds, int(app.config.get('ALLOWED_GUILD_ID')))

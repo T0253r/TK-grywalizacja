@@ -1,6 +1,6 @@
+from grywalizacja_app.extensions import db
+from grywalizacja_app.database.models import User_Task, Task, User
 from sqlalchemy.orm import joinedload
-
-from grywalizacja_app.database.models import db, User_Task, Task, User
 from typing import overload
 
 
@@ -85,9 +85,9 @@ def add_user_tasks_by_task(task_id):
     '''
     Adds user tasks for one task.
     '''
-    users = User.query.all()
+    users : list[User] = User.query.all()
 
-    user_tasks = [User_Task(task_id=task_id, user_id=user.id) for user in users]
+    user_tasks = [User_Task(task_id=task_id, user_id=user.discord_id) for user in users]
     db.session.add_all(user_tasks)
     db.session.commit()
 
