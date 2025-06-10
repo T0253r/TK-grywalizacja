@@ -11,7 +11,7 @@
     {
       "id": 1,
       "name": "Leaf 2",
-      "status": 0,
+      "status": 1,
       "description": "Leaf node 2",
       "points": 3,
       "children": []

@@ -11,7 +11,7 @@
     {
       "id": 1,
       "name": "Etap 1",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Pierwszy etap realizacji zadania głównego.",
       "points": 3,
       "children": [2]
@@ -19,7 +19,7 @@
     {
       "id": 2,
       "name": "Etap 2",
-      "status": 2,
+      "status": 0,
       "description": "Opis: Drugi etap, kontynuacja działań po zakończeniu Etapu 1.",
       "points": 5,
       "children": [3, 10, 13]
@@ -35,7 +35,7 @@
     {
       "id": 4,
       "name": "Etap 4",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Czwarty etap, prowadzący do dalszych podzadań.",
       "points": 6,
       "children": [5, 6]
@@ -43,7 +43,7 @@
     {
       "id": 5,
       "name": "Etap 5",
-      "status": 2,
+      "status": 0,
       "description": "Opis: Piąty etap, jeden z końcowych etapów głównego ciągu.",
       "points": 4,
       "children": [7]
@@ -67,7 +67,7 @@
     {
       "id": 8,
       "name": "Offshoot A1",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Podetap w ramach gałęzi A, kontynuacja Offshoot A.",
       "points": 2,
       "children": [12]
@@ -75,7 +75,7 @@
     {
       "id": 9,
       "name": "Etap 7",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Siódmy etap, będący przedostatnim krokiem przed scaleniem ścieżek.",
       "points": 9,
       "children": [14]
@@ -91,7 +91,7 @@
     {
       "id": 11,
       "name": "Offshoot B1",
-      "status": 2,
+      "status": 0,
       "description": "Opis: Podetap w ramach gałęzi B, prowadzący do głównego ciągu.",
       "points": 5,
       "children": [7]
@@ -99,7 +99,7 @@
     {
       "id": 12,
       "name": "Merge Node 1",
-      "status": 2,
+      "status": 0,
       "description": "Opis: Węzeł scalający rezultaty z różnych ścieżek (gałęzi).",
       "points": 6,
       "children": [15]
@@ -115,7 +115,7 @@
     {
       "id": 14,
       "name": "Merge Node 2",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Kolejny węzeł scalający wyniki kilku ścieżek przed finalnymi etapami.",
       "points": 7,
       "children": [15]
@@ -131,7 +131,7 @@
     {
       "id": 16,
       "name": "Etap 9",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Dziewiąty etap, niemal końcowy krok projektu.",
       "points": 3,
       "children": [18]
@@ -147,7 +147,7 @@
     {
       "id": 18,
       "name": "Etap 10",
-      "status": 2,
+      "status": 0,
       "description": "Opis: Ostatni etap projektu, podsumowanie i zamknięcie wszystkich działań.",
       "points": 12,
       "children": []
@@ -155,7 +155,7 @@
     {
       "id": 19,
       "name": "Offshoot D1",
-      "status": 1,
+      "status": 0,
       "description": "Opis: Podetap w ramach gałęzi D, łączący się ponownie z głównym ciągiem.",
       "points": 5,
       "children": [16]
