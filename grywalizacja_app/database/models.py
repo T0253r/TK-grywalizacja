@@ -21,9 +21,9 @@ class User(db.Model):
         return sum(
             user_task.task.points
             for user_task in self.user_tasks
-            if user_task.status ==2
+            if user_task.status == 2
         )
-    
+
     @points.expression
     def points(cls):
         return (

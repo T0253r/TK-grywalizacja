@@ -3,7 +3,8 @@
 const button_dict = {
     "home": "/",
     "tree": "/tree",
-    "rank": "/ranking"
+    "rank": "/ranking",
+    "user": "/dashboard"
 }
 
 const url = window.location.href
