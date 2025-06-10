@@ -128,16 +128,14 @@ fetch(`/tree/cytoscape?tree_id=${treeId}`) // pobiera dane z /tree/cytoscape -> 
     fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task_id: node.data('id') })
+        body: JSON.stringify({ task_id: node.data('id'), tree_id: treeId })
     })
     .then(res => res.json())
     .then(data => {
-        if (data.success) {
-            node.data('status', data.new_status) // moze nie dzialac, nietestowane
-            createPopper(node)
-        } else {
-            alert('Błąd podczas aktualizacji zadania');
-        }
+        document.querySelectorAll('.popper-div').forEach(e => e.remove());
+        node.data('status', data.status);
+        // cy.style().update();
+        //createPopper(node);
     });
 }
 
