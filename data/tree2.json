@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {
+      "id": 0,
+      "name": "Root of Tree 2",
+      "status": 2,
+      "description": "Start node for tree 2",
+      "points": 8,
+      "children": [1]
+    },
+    {
+      "id": 1,
+      "name": "Leaf 2",
+      "status": 1,
+      "description": "Leaf node 2",
+      "points": 3,
+      "children": []
+    }
+  ]
+}

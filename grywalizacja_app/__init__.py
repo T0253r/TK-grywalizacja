@@ -1,13 +1,14 @@
 import os
 from werkzeug.exceptions import NotFound
 from dotenv import load_dotenv
-from flask import Flask, render_template, redirect, session, url_for
+from flask import Flask, render_template, redirect, session, url_for, request, jsonify
 
 from .auth import login_required
 from .admin_options import admin_only
-from .tree_utils import get_tree
+from .tree_utils import get_tree, to_cytoscape_format
 from .database.queries.users import *
 from .database.queries.user_tasks import *
+from .database.queries.trees import get_public_trees, get_tree as get_tree_db
 from grywalizacja_app.extensions import db
 
 # w pliku .env należy wpisać:
@@ -60,15 +61,24 @@ def create_app(test_config=None):
         return render_template('index.html')
 
     @app.route('/tree')
-    @login_required
     def tree():
-        return render_template('tree.html')
+        trees = get_public_trees()
+        tree_id = request.args.get('tree_id', type=int)
+        if not tree_id and trees:
+            tree_id = trees[0]['id']  # domyslnie wczytuje sie pierwsze drzewko
+        return render_template('tree.html', trees=trees, selected_tree_id=tree_id)
 
     # uruchamia się przez tree.js
     @app.route("/tree/cytoscape")
-    @login_required
     def get_cytoscape_tree():
-        return get_tree('data/drzewko.json')
+        tree_id = request.args.get('tree_id', type=int)
+        if not tree_id:
+            trees = get_public_trees()
+            if not trees:
+                return jsonify({'nodes': [], 'edges': []})
+            tree_id = trees[0]['id'] #  ponownie, domyslnie wczytuje sie pierwsze
+        tree = get_tree_db(tree_id)
+        return jsonify(to_cytoscape_format(tree['json_structure'])) # nie jestem pewien czy to zadziała
 
     @app.route('/users')
     def users():
@@ -105,5 +115,8 @@ def create_app(test_config=None):
     from . import admin_options
     app.register_blueprint(auth.bp)
     app.register_blueprint(admin_options.admin)
+
+    from . import api
+    app.register_blueprint(api.api)
 
     return app
