@@ -1,6 +1,7 @@
 from grywalizacja_app.extensions import db
 from grywalizacja_app.database.models import Tree
-from grywalizacja_app.database.queries.tasks import add_all_tasks
+from grywalizacja_app.database.queries.tasks import add_all_tasks, get_tasks_by_tree_id
+from grywalizacja_app.database.queries.user_tasks import get_user_task
 
 
 def _prettify_tree(tree: Tree):
@@ -51,6 +52,27 @@ def get_tree(id):
         return _prettify_tree(tree)
     except Exception as e:
         print(f'Exception getting tree: {str(e)}')
+        raise
+
+def get_tree_json_by_user(id, discord_id):
+    '''
+    Gets tree by id and user's discord id. Throws NoResultFound and MultipleResultsFound.
+    '''
+    try:
+        tree : Tree = Tree.query.filter_by(id=id).one()
+        json_structure = tree.json_structure
+        tasks = get_tasks_by_tree_id(tree.id)
+        for task in tasks:
+            user_task = get_user_task(task_id=task['id'], user_id=discord_id)
+            status = user_task['status']
+            is_visible = user_task['is_visible']
+
+            json_structure['nodes'][task['node_id']]['status'] = status
+            json_structure['nodes'][task['node_id']]['is_visible'] = is_visible
+            
+            return json_structure
+    except Exception as e:
+        print(f"Exception getting tree's json: {str(e)}")
         raise
 
 def add_tree(name, json_structure, created_by):
